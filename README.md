@@ -2,30 +2,55 @@
 
 Azranur SARIKAYA TEZCAN — Sınıf Öğretmeni, Yenilikçi Sınıf Koordinatörü.
 
-Öğretmen ve öğrenci ekranları bulunan, Türkçe ve mobil uyumlu günlük planlayıcı.
-Profil, haftalık ders programı, görevler ve kişisel notlar içerir.
+Türkçe, mobil uyumlu öğretmen/öğrenci ekranları. Kullanıcı adı ve şifreyle
+Supabase Auth'a giriş; profil, kişisel ders programı, görev ve notlar Supabase'te
+saklanır. Yetki kaynağı veritabanındaki tek öğretmen UUID'sidir.
 
-## Yerelde çalıştırma
+## Çalıştırma
 
-Derleme veya paket kurulumu gerekmez. Python 3 ile:
+Node.js 22+ ve Python 3 ile:
 
 ```sh
-cd /workspace/ogretmenhesap
+npm ci
+npm run build
 python3 -m http.server 3000 --bind 0.0.0.0
 ```
 
-## Veri saklama
+`vendor/supabase.js` resmi Supabase istemcisinin kilitlenmiş bağımlılıklardan
+üretilen yerel tarayıcı paketidir. Çalışırken CDN gerektirmez.
 
-Veriler tarayıcının localStorage alanında, ekran türüne göre ayrı saklanır.
-Sunucu, gerçek hesap, parola, cihazlar arası eşitleme veya öğretmene veri gönderme
-bu sürümde bulunmaz. Ekran seçimi erişim kontrolü değildir. Ortak cihazlarda
-hassas bilgi kullanmayın; tarayıcı verilerinin silinmesi kayıtları siler.
-Aynı tarayıcıdaki öğrenci ekranı tek bir öğrenci profili içindir.
+## Supabase kurulumu
 
-## GitHub Pages
+[Kurulum sırası ve erişim kuralları](supabase/README.md). Yeni projede önce
+`supabase/schema.sql`, öğretmen Auth hesabını oluşturduktan sonra
+`supabase/teacher.sql` çalıştırılır. Kullanıcılar e-posta yazmaz; arayüz dahili
+kullanıcı adı adresini üretir. Auth **Confirm email** ayarı kapalı olmalıdır.
 
-GitHub depo ayarlarında **Pages → Build and deployment → Source: GitHub Actions**
-seçin. `main` dalına gönderilen değişiklikler `.github/workflows/pages.yml` ile
-yayımlanır. İlk kurulumda Pages etkinleştirilmiş olmalıdır.
-Yayımlama adresini başarılı `Publish GitHub Pages` çalışmasının deployment
-çıktısından alın.
+Proje URL'si ve yalnızca herkese açık publishable key `supabase-client.js`
+içindedir. Secret/service_role anahtarı tarayıcıya veya depoya eklenmez.
+
+SQL şeması öğrenci etkinlik geçmişi, denetimli mesajlar, seçili öğrencilere
+ödev atama, teslim/sürüm/geri bildirim, puanlar ve öğretmen belgelerini de kapsar.
+**Bu genişletilmiş özelliklerin arayüzleri henüz tamamlanmamıştır.** Mevcut
+Supabase projesine şema uygulanması ve gerçek hesaplarla uçtan uca test ayrı
+olarak yapılmalıdır. Şema testleri yerel PostgreSQL 17 üzerinde yapılır:
+
+```sh
+npm run test:sql
+```
+
+## Geçici SQL düğmesi
+
+Ekranın solundaki **SQL kodu** düğmesi şema ve öğretmen yetkisi dosyalarını açar.
+Kopyalama, güvenli tarayıcı panosu veya seçili metin üzerinden çalışır. Bu düğme
+SQL çalıştırmaz. İş bitince `index.html` içindeki geçici blok/script,
+`sql-helper.js` ve ilgili CSS birlikte kaldırılabilir.
+
+## Yayın
+
+Statik arayüz GitHub Pages'te çalışabilir; veri ve Auth Supabase üzerinden
+sağlanır. GitHub Settings → Pages → Source: **GitHub Actions** seçin.
+`.github/workflows/pages.yml`, main dalına gönderildiğinde yalnız public site
+dosyalarını yayımlar. Yayın adresi başarılı Actions deployment çıktısındadır.
+Supabase Auth URL ayarlarına canlı site adresi eklenmelidir. Yayın başarısı ve
+canlı Supabase işlemleri doğrulanmadan üretim hazır kabul edilmemelidir.

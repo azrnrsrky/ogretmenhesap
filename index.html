@@ -1,3 +1,26 @@
 <!doctype html>
-<html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#203c35"><title>Öğretmen Hesap • Gününe yer aç</title><link rel="stylesheet" href="style.css"></head>
-<body><div id="app"></div><script src="app.js"></script></body></html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#203c35">
+  <title>Öğretmen Hesap • Gününe yer aç</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <!-- Temporary setup helper: remove this block and sql-helper.js after setup. -->
+  <button id="sql-help" class="sql-help" aria-haspopup="dialog">⟨/⟩ &nbsp; SQL kodu</button>
+  <dialog id="sql-dialog" aria-labelledby="sql-heading">
+    <div class="sql-dialog-head"><div><p class="eyebrow">GEÇİCİ KURULUM YARDIMCISI</p><h2 id="sql-heading">Supabase SQL kodları</h2></div><button id="sql-close" aria-label="SQL penceresini kapat">×</button></div>
+    <p class="sql-project">Proje: <strong>zslydvggihqqqtbelvav</strong></p>
+    <div class="auth-tabs"><button type="button" data-sql="schema" class="selected" aria-pressed="true">1. Veritabanı şeması</button><button type="button" data-sql="teacher" aria-pressed="false">2. Öğretmen yetkisi</button></div>
+    <p class="sql-instructions">Yeni projenizde önce şemayı SQL Editor’da bir kez çalıştırın. Sonra Authentication → Users bölümünden <strong>azranurtezcan@users.example.com</strong> hesabını belirlediğiniz şifreyle oluşturup onaylayın. Ardından öğretmen yetkisi SQL’ini çalıştırın. Öğretmen tanımlanana kadar genel öğrenci kaydını kapalı tutun.</p>
+    <label class="eyebrow" for="sql-code">KOPYALANACAK SQL</label>
+    <textarea id="sql-code" readonly spellcheck="false" wrap="off"></textarea>
+    <div class="sql-actions"><p id="sql-copy-status" role="status" aria-live="polite"></p><button id="sql-copy" class="primary">Kodu kopyala</button></div>
+  </dialog>
+  <script type="module" src="app.js"></script>
+  <script src="sql-helper.js"></script>
+</body>
+</html>
