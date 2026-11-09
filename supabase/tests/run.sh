@@ -24,7 +24,7 @@ if [[ "$schema_test_ready" != true ]]; then
 fi
 docker_local exec "$schema_test_name" mkdir -p /work
 docker_local cp "$schema_test_dir" "$schema_test_name:/work/supabase"
-for schema_test_file in tests/fixture.sql schema.sql tests/policies.sql; do
+for schema_test_file in tests/fixture.sql schema.sql applications.sql applications.sql tests/policies.sql; do
   docker_local exec "$schema_test_name" psql -X -q -U postgres -v ON_ERROR_STOP=1 \
     -f "/work/supabase/$schema_test_file"
 done

@@ -39,6 +39,8 @@ END $$;
 SELECT pg_temp.denied($q$UPDATE public.classroom_settings SET teacher_id=auth.uid()$q$);
 SELECT pg_temp.denied($q$INSERT INTO public.point_awards(student_id,points,reason) VALUES(auth.uid(),100,'Fake')$q$);
 SELECT pg_temp.denied($q$UPDATE public.profiles SET username='teacher' WHERE id=auth.uid()$q$);
+INSERT INTO public.user_applications(user_id,title,url) VALUES(auth.uid(),'Canva','https://www.canva.com/');
+SELECT pg_temp.denied($q$INSERT INTO public.user_applications(user_id,title,url) VALUES('33333333-3333-3333-3333-333333333333','Fake','https://example.com/')$q$);
 INSERT INTO public.activity_events(resource_id,event_type) VALUES('cccccccc-cccc-cccc-cccc-cccccccccccc','game_start');
 DO $$ BEGIN ASSERT (SELECT count(*)=0 FROM public.activity_events); END $$;
 SELECT pg_temp.denied($q$INSERT INTO public.activity_events(student_id,resource_id,event_type) VALUES('33333333-3333-3333-3333-333333333333','cccccccc-cccc-cccc-cccc-cccccccccccc','game_start')$q$);
@@ -51,6 +53,7 @@ INSERT INTO storage.objects(bucket_id,name) VALUES('homework-files','22222222-22
 SELECT pg_temp.denied($q$INSERT INTO storage.objects(bucket_id,name) VALUES('homework-files','33333333-3333-3333-3333-333333333333/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/fake.pdf')$q$);
 SELECT set_config('request.jwt.claim.sub','33333333-3333-3333-3333-333333333333',true);
 DO $$ BEGIN
+ ASSERT (SELECT count(*)=0 FROM public.user_applications);
  ASSERT (SELECT count(*)=0 FROM public.assignments);
  ASSERT (SELECT count(*)=0 FROM public.submissions);
  ASSERT (SELECT count(*)=0 FROM public.messages);

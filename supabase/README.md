@@ -109,3 +109,11 @@ Yerel Docker ortamında `bash supabase/tests/run.sh` komutu geçici PostgreSQL 1
 silinir. `tests/fixture.sql` yalnız test için Auth/Storage şemalarını taklit eder;
 **gerçek Supabase projesinde çalıştırılmaz**. Bu testler gerçek GoTrue kayıt/giriş,
 Storage HTTP servisi veya Realtime teslimatının uçtan uca testi değildir.
+
+## Uygulamalarım menüsü
+
+`user_applications`, her hesabın kendi uygulama bağlantılarını saklar. RLS başka
+hesapların bağlantılarını okumayı veya değiştirmeyi engeller. Yeni şema bu tabloyu
+içerir. Şemayı daha önce kurduysanız SQL düğmesindeki **3. Uygulamalarım**
+sekmesini veya `supabase/applications.sql` dosyasını çalıştırın. Bu ek kurulum
+tekrar çalıştırılabilir; mevcut kayıtlar korunur.

@@ -25,7 +25,7 @@ jobs:
           cp index.html style.css app.js supabase-client.js sql-helper.js _site/
           cp -r vendor _site/
           mkdir -p _site/supabase
-          cp supabase/schema.sql supabase/teacher.sql _site/supabase/
+          cp supabase/schema.sql supabase/teacher.sql supabase/applications.sql _site/supabase/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

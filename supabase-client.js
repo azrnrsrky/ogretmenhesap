@@ -35,6 +35,17 @@ export async function plannerApi(path, options={}) {
     return {user:await identity(result.user)};
   }
   if(path==='/api/logout') { checked(await supabase.auth.signOut()); return {ok:true}; }
+  if(path==='/api/applications') {
+    const {user}=checked(await supabase.auth.getUser());
+    if(!user)throw new Error('Lütfen tekrar giriş yapın.');
+    const result=options.method==='POST'
+      ?await supabase.from('user_applications').insert({user_id:user.id,title:body.title,url:body.url})
+      :options.method==='DELETE'
+        ?await supabase.from('user_applications').delete().eq('id',body.id).eq('user_id',user.id)
+        :await supabase.from('user_applications').select('id,title,url').eq('user_id',user.id).order('created_at',{ascending:false});
+    if(result.error&&['42P01','PGRST205'].includes(result.error.code))throw new Error('SQL kodu düğmesindeki “3. Uygulamalarım” kodunu Supabase SQL Editor’da bir kez çalıştırın.');
+    return checked(result);
+  }
   if(path==='/api/data') {
     const {user}=checked(await supabase.auth.getUser());
     if(!user) throw new Error('Lütfen tekrar giriş yapın.');

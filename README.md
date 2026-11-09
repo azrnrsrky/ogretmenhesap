@@ -4,7 +4,8 @@ Azranur SARIKAYA TEZCAN — Sınıf Öğretmeni, Yenilikçi Sınıf Koordinatör
 
 Türkçe, mobil uyumlu öğretmen/öğrenci ekranları. Kullanıcı adı ve şifreyle
 Supabase Auth'a giriş; profil, kişisel ders programı, görev ve notlar Supabase'te
-saklanır. Yetki kaynağı veritabanındaki tek öğretmen UUID'sidir.
+saklanır. **Uygulamalarım** menüsünden kişisel uygulama bağlantıları eklenir,
+açılır ve kaldırılır. Yetki kaynağı veritabanındaki tek öğretmen UUID'sidir.
 
 ## Çalıştırma
 
